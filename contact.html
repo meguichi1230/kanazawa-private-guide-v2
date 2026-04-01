@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600&family=Great+Vibes&display=swap"
+      rel="stylesheet"
+    />
+    <meta name="description" content="Contact Yuri to check availability for a private tour in Kanazawa. Tell her your travel dates and she will create a plan just for you." />
+    <!-- OGP: Replace YOUR-DOMAIN.com with your actual domain when ready -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Yuri | Private Guide in Kanazawa" />
+    <meta property="og:title" content="Contact Yuri | Private Guide in Kanazawa" />
+    <meta property="og:description" content="Contact Yuri to check availability for a private tour in Kanazawa. Tell her your travel dates and she will create a plan just for you." />
+    <meta property="og:url" content="https://meguichi1230.github.io/kanazawa-private-guide/contact.html" />
+    <meta property="og:image" content="https://meguichi1230.github.io/kanazawa-private-guide/assets/img/hero-1.jpg" />
+    <link rel="icon" type="image/png" href="assets/img/mascot-L.png" />
+    <title>Contact Yuri | Private Guide in Kanazawa</title>
+    <link rel="stylesheet" href="assets/css/style.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="index.html">
+        <span class="brand__name">Yuri</span>
+        <span class="brand__role">Private Guide in Kanazawa</span>
+      </a>
+      <nav class="nav site-header__nav">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="tours.html">Tours</a>
+        <a href="contact.html" class="btn btn-primary">Check Availability</a>
+      </nav>
+    </header>
+
+    <section class="section">
+      <div class="container">
+        <h1>Contact</h1>
+        <p class="lead">
+          Tell me your travel dates and what you want to see.<br />
+          I will keep a gentle pace and adjust the plan for you.
+        </p>
+
+        <form id="form" class="contact-form" action="#" method="post">
+          <label>
+            Name
+            <input type="text" name="name" autocomplete="name" required />
+          </label>
+
+          <label>
+            Email
+            <input type="email" name="email" autocomplete="email" required />
+          </label>
+
+          <div class="form-row">
+            <label>
+              Preferred date (optional)
+              <input type="date" name="date" />
+            </label>
+
+            <label>
+              Guests (optional)
+              <input type="number" name="guests" min="1" placeholder="e.g., 2" />
+            </label>
+          </div>
+
+          <label>
+            Message
+            <textarea
+              name="message"
+              rows="6"
+              placeholder="What would you like to do in Kanazawa?"
+              required
+            ></textarea>
+          </label>
+
+          <button type="submit" class="btn btn-primary">Send My Request</button>
+
+          <p class="form-note">I will reply as soon as I can.</p>
+        </form>
+      </div>
+    </section>
+
+    <footer class="simple-footer">
+      <div class="simple-footer__inner">
+        <p class="simple-footer__copy">© Yuri Guide</p>
+        <a href="privacy.html" class="simple-footer__link">Privacy Policy</a>
+      </div>
+    </footer>
+  </body>
+</html>
