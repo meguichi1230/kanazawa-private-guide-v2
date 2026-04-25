@@ -87,51 +87,6 @@ document.addEventListener("DOMContentLoaded", function () {
     observer.observe(daySection);
   }
 
-  const trustSection = document.querySelector("#trust");
-  const trustNumbers = document.querySelectorAll(".trust-number");
-
-  if (trustSection && trustNumbers.length > 0) {
-    const animateCount = (element, target) => {
-      const duration = 1400;
-      const startTime = performance.now();
-
-      const step = (currentTime) => {
-        const progress = Math.min((currentTime - startTime) / duration, 1);
-        const eased = 1 - Math.pow(1 - progress, 3); // easeOutCubic
-        const value = Math.round(target * eased);
-
-        element.textContent = value.toString();
-
-        if (progress < 1) {
-          requestAnimationFrame(step);
-        } else {
-          element.textContent = target.toString();
-        }
-      };
-
-      requestAnimationFrame(step);
-    };
-
-    const trustObserver = new IntersectionObserver(
-      (entries, observer) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            trustNumbers.forEach((number) => {
-              const target = Number(number.dataset.target);
-              animateCount(number, target);
-            });
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      {
-        threshold: 0.45,
-      },
-    );
-
-    trustObserver.observe(trustSection);
-  }
-
   if (header && footer && cta) {
     const observer = new IntersectionObserver(
       ([entry]) => {
