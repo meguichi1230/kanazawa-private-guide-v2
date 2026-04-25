@@ -1,549 +1,326 @@
 <!doctype html>
-<html lang="ja">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="robots" content="noindex, nofollow" />
-    <title>For Meifuru</title>
-    <style>
-      :root {
-        --bg-start: #f8efe7;
-        --bg-end: #eef5f6;
-        --text-main: #2e2730;
-        --text-soft: #776c77;
-        --box-base: #d6b394;
-        --box-base-dark: #c79e7c;
-        --box-lid: #e4c8ae;
-        --ribbon: #af6c73;
-        --line: rgba(80, 63, 61, 0.18);
-        --glow: rgba(255, 244, 191, 0.95);
-        --card-bg: rgba(255, 255, 255, 0.82);
-        --button-bg: #43586b;
-        --button-hover: #334758;
-      }
-
-      * {
-        box-sizing: border-box;
-      }
-
-      body {
-        margin: 0;
-        min-height: 100vh;
-        font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
-        color: var(--text-main);
-        background:
-          radial-gradient(circle at top, rgba(255, 255, 255, 0.75), transparent 36%),
-          linear-gradient(180deg, var(--bg-start), var(--bg-end));
-        overflow-x: hidden;
-        overflow-y: auto;
-      }
-
-      .welcome-page {
-        position: relative;
-        min-height: 100vh;
-        display: grid;
-        place-items: center;
-        padding: 40px 20px 72px;
-      }
-
-      .welcome-page::before,
-      .welcome-page::after {
-        content: "";
-        position: absolute;
-        border-radius: 999px;
-        filter: blur(18px);
-        opacity: 0.45;
-        pointer-events: none;
-      }
-
-      .welcome-page::before {
-        width: 320px;
-        height: 320px;
-        top: 8%;
-        left: -90px;
-        background: rgba(255, 223, 196, 0.72);
-      }
-
-      .welcome-page::after {
-        width: 280px;
-        height: 280px;
-        right: -80px;
-        bottom: 10%;
-        background: rgba(192, 225, 231, 0.7);
-      }
-
-      .container {
-        position: relative;
-        width: min(100%, 760px);
-        text-align: center;
-      }
-
-      .eyebrow {
-        margin: 0 0 10px;
-        font-size: 12px;
-        letter-spacing: 0.28em;
-        color: var(--text-soft);
-        text-transform: uppercase;
-      }
-
-      .title {
-        margin: 0;
-        font-size: clamp(34px, 5vw, 56px);
-        line-height: 1.18;
-      }
-
-      .lead {
-        margin: 16px auto 0;
-        max-width: 34ch;
-        font-size: 15px;
-        line-height: 1.9;
-        color: var(--text-soft);
-      }
-
-      .gift-stage {
-        position: relative;
-        margin-top: 42px;
-        min-height: 330px;
-        display: grid;
-        place-items: center;
-      }
-
-      .halo {
-        position: absolute;
-        left: 50%;
-        top: 30px;
-        width: 280px;
-        height: 280px;
-        border-radius: 50%;
-        background:
-          radial-gradient(circle, var(--glow) 0%, rgba(255, 227, 143, 0.52) 35%, rgba(255, 227, 143, 0.14) 58%, transparent 76%);
-        opacity: 0;
-        filter: blur(6px);
-        transform: translateX(-50%) scale(0.5);
-        transition:
-          opacity 0.8s ease,
-          transform 0.9s ease;
-      }
-
-      .sparkles {
-        position: absolute;
-        inset: 0;
-        pointer-events: none;
-      }
-
-      .sparkles span {
-        position: absolute;
-        left: 50%;
-        top: 54%;
-        width: 10px;
-        height: 10px;
-        margin-left: -5px;
-        margin-top: -5px;
-        border-radius: 50%;
-        background: radial-gradient(circle, rgba(255, 255, 255, 0.95), rgba(255, 226, 157, 0.38));
-        opacity: 0;
-        transform: translate(0, 0) scale(0.2);
-      }
-
-      .gift-button {
-        position: relative;
-        width: 260px;
-        height: 240px;
-        border: 0;
-        background: transparent;
-        padding: 0;
-        cursor: pointer;
-      }
-
-      .gift-button:focus-visible {
-        outline: 3px solid rgba(67, 88, 107, 0.28);
-        outline-offset: 8px;
-        border-radius: 24px;
-      }
-
-      .gift-shadow {
-        position: absolute;
-        left: 50%;
-        bottom: 12px;
-        width: 170px;
-        height: 28px;
-        border-radius: 50%;
-        background: rgba(95, 71, 62, 0.18);
-        transform: translateX(-50%);
-        filter: blur(9px);
-        transition:
-          transform 0.8s ease,
-          opacity 0.8s ease;
-      }
-
-      .gift {
-        position: absolute;
-        left: 50%;
-        bottom: 28px;
-        width: 180px;
-        height: 136px;
-        transform: translateX(-50%);
-      }
-
-      .gift-base {
-        position: absolute;
-        inset: 0;
-        border-radius: 16px;
-        background: linear-gradient(180deg, var(--box-base), var(--box-base-dark));
-        box-shadow:
-          inset 0 -10px 0 rgba(0, 0, 0, 0.06),
-          0 18px 26px rgba(98, 72, 60, 0.18);
-      }
-
-      .gift-base::before,
-      .gift-base::after,
-      .gift-lid::before,
-      .gift-lid::after {
-        content: "";
-        position: absolute;
-        background: var(--ribbon);
-        border-radius: 999px;
-      }
-
-      .gift-base::before {
-        top: 0;
-        bottom: 0;
-        left: 50%;
-        width: 20px;
-        transform: translateX(-50%);
-      }
-
-      .gift-base::after {
-        left: 0;
-        right: 0;
-        top: 46px;
-        height: 14px;
-      }
-
-      .gift-lid {
-        position: absolute;
-        left: 50%;
-        top: -28px;
-        width: 202px;
-        height: 54px;
-        transform: translateX(-50%);
-        transform-origin: center bottom;
-        transition:
-          transform 0.9s cubic-bezier(0.22, 0.82, 0.24, 1),
-          top 0.9s cubic-bezier(0.22, 0.82, 0.24, 1);
-      }
-
-      .gift-lid-panel {
-        position: absolute;
-        inset: 0;
-        border-radius: 16px;
-        background: linear-gradient(180deg, #ecd6c3, var(--box-lid));
-        box-shadow: 0 10px 18px rgba(98, 71, 61, 0.14);
-      }
-
-      .gift-lid::before {
-        top: 0;
-        bottom: 0;
-        left: 50%;
-        width: 20px;
-        transform: translateX(-50%);
-      }
-
-      .gift-lid::after {
-        left: 0;
-        right: 0;
-        top: 18px;
-        height: 14px;
-      }
-
-      .gift-bow {
-        position: absolute;
-        left: 50%;
-        top: -16px;
-        width: 70px;
-        height: 34px;
-        transform: translateX(-50%);
-      }
-
-      .gift-bow::before,
-      .gift-bow::after {
-        content: "";
-        position: absolute;
-        top: 0;
-        width: 32px;
-        height: 24px;
-        border: 5px solid var(--ribbon);
-        border-radius: 999px 999px 999px 14px;
-      }
-
-      .gift-bow::before {
-        left: 0;
-        transform: rotate(-16deg);
-      }
-
-      .gift-bow::after {
-        right: 0;
-        transform: scaleX(-1) rotate(-16deg);
-      }
-
-      .gift-knot {
-        position: absolute;
-        left: 50%;
-        top: 7px;
-        width: 18px;
-        height: 18px;
-        border-radius: 50%;
-        background: var(--ribbon);
-        transform: translateX(-50%);
-      }
-
-      .hint {
-        margin: 12px 0 0;
-        font-size: 13px;
-        color: var(--text-soft);
-        letter-spacing: 0.08em;
-      }
-
-      .message-card {
-        width: min(100%, 560px);
-        margin: 24px auto 0;
-        padding: 30px 24px 32px;
-        border: 1px solid rgba(255, 255, 255, 0.5);
-        border-radius: 28px;
-        background: var(--card-bg);
-        backdrop-filter: blur(10px);
-        box-shadow:
-          0 18px 42px rgba(91, 69, 65, 0.12),
-          inset 0 1px 0 rgba(255, 255, 255, 0.6);
-        opacity: 0;
-        transform: translateY(24px);
-        pointer-events: none;
-        transition:
-          opacity 0.7s ease,
-          transform 0.7s ease;
-      }
-
-      .message-card h2 {
-        margin: 0 0 14px;
-        font-size: clamp(26px, 4vw, 40px);
-        line-height: 1.2;
-      }
-
-      .message-card p {
-        margin: 0;
-        font-size: 15px;
-        line-height: 1.9;
-        color: var(--text-soft);
-      }
-
-      .cta-link {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        min-width: 200px;
-        margin-top: 24px;
-        padding: 14px 26px;
-        border-radius: 999px;
-        background: var(--button-bg);
-        color: #fff;
-        text-decoration: none;
-        font-weight: 700;
-        box-shadow: 0 14px 28px rgba(67, 88, 107, 0.2);
-        transition:
-          background 0.2s ease,
-          transform 0.2s ease;
-      }
-
-      .cta-link:hover {
-        background: var(--button-hover);
-        transform: translateY(-1px);
-      }
-
-      .opened .halo {
-        opacity: 1;
-        transform: translateX(-50%) scale(1);
-      }
-
-      .opened .gift-lid {
-        top: -74px;
-        transform: translateX(-50%) rotate(-24deg);
-      }
-
-      .opened .gift-shadow {
-        transform: translateX(-50%) scale(1.15);
-        opacity: 0.22;
-      }
-
-      .opened .message-card {
-        opacity: 1;
-        transform: translateY(0);
-        pointer-events: auto;
-        transition-delay: 0.22s;
-      }
-
-      .opened .hint {
-        opacity: 0;
-        transition: opacity 0.25s ease;
-      }
-
-      .opened .sparkles span {
-        animation: sparkle 1.2s ease-out forwards;
-      }
-
-      .sparkles span:nth-child(1) {
-        --tx: -102px;
-        --ty: -112px;
-      }
-
-      .sparkles span:nth-child(2) {
-        --tx: -70px;
-        --ty: -144px;
-      }
-
-      .sparkles span:nth-child(3) {
-        --tx: -18px;
-        --ty: -126px;
-      }
-
-      .sparkles span:nth-child(4) {
-        --tx: 28px;
-        --ty: -148px;
-      }
-
-      .sparkles span:nth-child(5) {
-        --tx: 78px;
-        --ty: -126px;
-      }
-
-      .sparkles span:nth-child(6) {
-        --tx: 116px;
-        --ty: -84px;
-      }
-
-      .sparkles span:nth-child(7) {
-        --tx: -124px;
-        --ty: -42px;
-      }
-
-      .sparkles span:nth-child(8) {
-        --tx: 126px;
-        --ty: -30px;
-      }
-
-      @keyframes sparkle {
-        0% {
-          opacity: 0;
-          transform: translate(0, 0) scale(0.2);
-        }
-
-        18% {
-          opacity: 1;
-        }
-
-        100% {
-          opacity: 0;
-          transform: translate(var(--tx), var(--ty)) scale(1.2);
-        }
-      }
-
-      @media (prefers-reduced-motion: reduce) {
-        *,
-        *::before,
-        *::after {
-          animation: none !important;
-          transition: none !important;
-        }
-      }
-
-      @media (max-width: 640px) {
-        .welcome-page {
-          padding: 28px 16px 56px;
-        }
-
-        .gift-stage {
-          min-height: 290px;
-          margin-top: 28px;
-        }
-
-        .gift-button {
-          transform: scale(0.88);
-        }
-
-        .message-card {
-          padding: 26px 20px 28px;
-        }
-      }
-    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600&family=Great+Vibes&display=swap"
+      rel="stylesheet"
+    />
+    <meta name="description" content="Yuri is a private guide in Kanazawa, Japan. Join a calm, personal walking tour and discover the city's hidden charm — gardens, old streets, and everyday life." />
+    <!-- OGP: Replace YOUR-DOMAIN.com with your actual domain when ready -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Yuri | Private Guide in Kanazawa" />
+    <meta property="og:title" content="Yuri | Private Guide in Kanazawa" />
+    <meta property="og:description" content="Yuri is a private guide in Kanazawa, Japan. Join a calm, personal walking tour and discover the city's hidden charm — gardens, old streets, and everyday life." />
+    <meta property="og:url" content="https://meguichi1230.github.io/kanazawa-private-guide-v2/index.html" />
+    <meta property="og:image" content="https://meguichi1230.github.io/kanazawa-private-guide-v2/assets/img/hero-1.jpg" />
+    <link rel="icon" type="image/png" href="assets/img/mascot-L.png" />
+    <title>Yuri | Private Guide in Kanazawa</title>
+    <link rel="stylesheet" href="assets/css/style.css" />
   </head>
-  <body>
-    <main class="welcome-page" id="welcomePage">
+
+  <body class="home">
+    <!-- ===== Header ===== -->
+    <header class="site-header">
+      <div class="site-header__bar">
+        <a class="brand" href="index.html">
+          <span class="brand__name">Yuri</span>
+          <span class="brand__role">Private Guide in Kanazawa</span>
+        </a>
+        <button
+          class="menu-toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="site-menu"
+          aria-label="Open navigation menu"
+        >
+          <span class="menu-toggle__lines" aria-hidden="true"></span>
+        </button>
+      </div>
+      <nav id="site-menu" class="nav site-header__nav">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="tours.html">Tours</a>
+        <a href="contact.html" class="btn btn-primary">Check Availability</a>
+      </nav>
+    </header>
+
+    <!-- ===== Hero ===== -->
+    <section id="top" class="hero">
+      <div class="hero-content container">
+        <h1>Let Me Show You the Kanazawa I Love</h1>
+        <p>
+          Not just famous spots,<br />
+          but the small moments of everyday life.
+        </p>
+        <p>
+          A walk through the city,<br />
+          as if you were visiting a friend.
+        </p>
+        <div class="hero-buttons">
+          <a class="btn btn-primary" href="contact.html">Check Availability</a>
+          <a class="btn btn-secondary" href="tours.html">View Tours</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="intro" class="intro snap-panel">
       <div class="container">
-        <p class="eyebrow">Birthday Gift Website</p>
-        <h1 class="title">めいふるさんへのプレゼント</h1>
-        <p class="lead">
-          アクセスした最初のページで、小さなプレゼントを開けるように。<br />
-          箱をクリックすると、このサイトの入口があらわれます。
+        <h2>A private guide with deeply connected to Kanazawa.</h2>
+
+        <img
+          src="assets/img/yuri-portrait.png"
+          alt="Yuri in Kanazawa"
+          class="intro-photo"
+          loading="lazy"
+        />
+
+        <p>
+          I have lived in Kanazawa for over 23 years,
+          and I truly love this city.
         </p>
 
-        <section class="gift-stage" aria-label="ギフトボックス">
-          <div class="halo" aria-hidden="true"></div>
+        <p>
+          I enjoy sharing not only the famous places,
+          but also the quiet moments and local life
+          that many visitors might miss.
+        </p>
 
-          <div class="sparkles" aria-hidden="true">
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
+        <p>
+          If you are looking for a calm and personal experience,
+          I would be happy to walk with you.
+        </p>
+      </div>
+    </section>
+
+    <section id="about-page" class="about-page snap-panel">
+      <section id="story" class="section section--loose">
+        <div class="container">
+          <h2>Why I Became a Guide</h2>
+          <div class="story-copy">
+            <p>
+              I was born and raised in Kanazawa, and later worked as a nurse in
+              Tokyo and Sydney. Living outside my hometown helped me rediscover
+              the city’s unique charm and the warmth of its people.
+            </p>
+            <p>
+              I want to be a bridge between the guests who come to experience
+              Kanazawa’s charm and the wonderful locals who love and support
+              it.
+            </p>
+            <p>
+              Through a local’s perspective, I hope to share the true depth and
+              character of Kanazawa. Not just as a guide, but as a companion on
+              your journey, I want to experience this city together and create
+              meaningful memories with you.
+            </p>
+          </div>
+          <div style="margin-top: 30px;">
+            <a href="tours.html" class="btn btn-primary">View Tours</a>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <!-- ===== Quote ===== -->
+    <section id="quote" class="section quote">
+      <div class="container">
+        <blockquote>
+          “I love the moment when someone quietly says — this is special.”
+        </blockquote>
+      </div>
+    </section>
+
+    <!-- ===== A Day With Me ===== -->
+    <section id="day" class="section">
+      <div class="container">
+        <h2>A Day With Me</h2>
+
+        <div class="day-wrap">
+          <img
+            src="assets/img/mascot-L.png"
+            alt="Yuri Mascot"
+            class="mascot day-mascot"
+            loading="lazy"
+          />
+
+          <div class="grid">
+            <div class="card">
+              <img src="assets/img/kenrokuen.jpg" alt="Kenrokuen Garden" loading="lazy" />
+              <h3>Kenrokuen Garden</h3>
+              <p>
+                Walk through one of Japan’s most beautiful gardens at a relaxed
+                pace.
+              </p>
+            </div>
+
+            <div class="card">
+              <img src="assets/img/higashi.jpg" alt="Higashi Chaya District" loading="lazy" />
+              <h3>Higashi Chaya District</h3>
+              <p>
+                Experience the charm of traditional tea houses and hidden
+                streets.
+              </p>
+            </div>
+
+            <div class="card">
+              <img
+                src="assets/img/kanazawa-castle.jpg"
+                alt="Kanazawa Castle"
+                loading="lazy"
+              />
+              <h3>Kanazawa Castle</h3>
+              <p>
+                Discover history and architecture surrounded by peaceful
+                scenery.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Reviews ===== -->
+    <section id="voices" class="section snap snap-panel">
+      <div class="container">
+        <h2>Guest Voices</h2>
+        <p class="section-lead">
+          Kind words from guests who spent time with Yuri in Kanazawa.
+        </p>
+
+        <div class="voices-grid">
+          <article class="voice-card">
+            <p>
+              “Yuri made our time in Kanazawa feel calm, personal, and truly
+              memorable.”
+            </p>
+            <div class="voice-name">— Guest from Australia</div>
+          </article>
+          <article class="voice-card">
+            <p>
+              “It felt less like a tour and more like being gently welcomed into
+              the city.”
+            </p>
+            <div class="voice-name">— Guest from Singapore</div>
+          </article>
+          <article class="voice-card">
+            <p>
+              “Her warmth and local knowledge made the whole experience
+              special.”
+            </p>
+            <div class="voice-name">— Guest from the U.S.</div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="cta" class="section cta snap snap-panel">
+      <div class="container">
+        <h2>Let’s Make Your Time in Kanazawa Memorable</h2>
+        <p>
+          If you are looking for a calm and personal way to experience
+          Kanazawa, I would be happy to guide you.
+        </p>
+
+        <div class="cta-actions">
+          <a class="btn btn-primary" href="contact.html">Contact Yuri</a>
+        </div>
+
+        <div class="cta-links">
+          <div class="sns-links">
+            <a
+              href="https://www.instagram.com/kanazawatrip_yuri"
+              target="_blank"
+              rel="noopener"
+              aria-label="Instagram"
+              class="sns-link"
+            >
+              <img src="assets/img/icon-instagram.png" alt="Instagram" />
+            </a>
+
+            <a
+              href="https://www.threads.com/@kanazawatrip_yuri"
+              target="_blank"
+              rel="noopener"
+              aria-label="Threads"
+              class="sns-link"
+            >
+              <img src="assets/img/icon-threads.png" alt="Threads" />
+            </a>
           </div>
 
-          <button
-            id="giftButton"
-            class="gift-button"
-            type="button"
-            aria-expanded="false"
-            aria-controls="giftMessage"
-          >
-            <span class="gift-shadow" aria-hidden="true"></span>
-            <span class="gift" aria-hidden="true">
-              <span class="gift-lid">
-                <span class="gift-lid-panel"></span>
-                <span class="gift-bow"></span>
-                <span class="gift-knot"></span>
-              </span>
-              <span class="gift-base"></span>
-            </span>
-          </button>
-        </section>
+          <div class="external-links">
+            <a
+              class="external-link"
+              href="https://www.viator.com/ja-JP/"
+              target="_blank"
+              rel="noopener"
+            >
+              View on Viator
+            </a>
 
-        <p class="hint" id="giftHint">クリックしてプレゼントを開ける</p>
+            <a
+              class="external-link"
+              href="https://www.airbnb.jp/"
+              target="_blank"
+              rel="noopener"
+            >
+              View on Airbnb
+            </a>
 
-        <section class="message-card" id="giftMessage" aria-live="polite">
-          <h2>Happy Birthday, Meifuru</h2>
-          <p>
-            お誕生日おめでとうございます。<br />
-            あなたのために、ホームページを作ってみました。<br />
-            よかったら、ここからゆっくり見てみてください。
-          </p>
-          <a href="main.html" class="cta-link">サイトを見る</a>
-        </section>
+            <a
+              class="external-link"
+              href="https://www.airbnb.jp/users/profile/1478832187392765787?previous_page_name=PdpExperience"
+              target="_blank"
+              rel="noopener"
+            >
+              View Airbnb Profile
+            </a>
+          </div>
+        </div>
       </div>
-    </main>
+    </section>
 
-    <script>
-      const welcomePage = document.getElementById("welcomePage");
-      const giftButton = document.getElementById("giftButton");
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <p class="footer-yuri">Yuri</p>
+          <p class="footer-role">Private Guide in Kanazawa</p>
+        </div>
+        <a href="privacy.html" class="footer-link">Privacy Policy</a>
+      </div>
+    </footer>
 
-      giftButton.addEventListener("click", () => {
-        if (welcomePage.classList.contains("opened")) {
-          return;
+    <script src="assets/js/main.js"></script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Yuri",
+      "jobTitle": "Private Tour Guide",
+      "description": "Private guide in Kanazawa, Japan with over 23 years of local knowledge. Offering calm, personal walking tours for first-time visitors.",
+      "url": "https://meguichi1230.github.io/kanazawa-private-guide-v2/",
+      "image": "https://meguichi1230.github.io/kanazawa-private-guide-v2/assets/img/yuri-portrait.png",
+      "knowsLanguage": ["ja", "en"],
+      "hasOccupation": {
+        "@type": "Occupation",
+        "name": "Tour Guide",
+        "occupationLocation": {
+          "@type": "City",
+          "name": "Kanazawa",
+          "addressCountry": "JP"
         }
-
-        welcomePage.classList.add("opened");
-        giftButton.setAttribute("aria-expanded", "true");
-      });
+      },
+      "sameAs": [
+        "https://www.instagram.com/kanazawatrip_yuri",
+        "https://www.instagram.com/kanazawatrip_yuri",
+        "https://www.threads.com/@kanazawatrip_yuri"
+      ]
+    }
     </script>
+    <script src="assets/js/site.js"></script>
   </body>
 </html>
